@@ -67,8 +67,11 @@ extension RouteType {
         return NSURL(string: "someURL")!
     }
     
-    var manager: Alamofire.Manager {
-        return Alamofire.Manager.sharedInstance
+    var manager: ManagerType {
+        return RxManager.init(manager: Alamofire.Manager.sharedInstance)
     }
+    
+    var retryCount: Int { return 0 }
+
 }
 

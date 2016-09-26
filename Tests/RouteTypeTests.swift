@@ -13,7 +13,7 @@ import Alamofire
 class RouteTypeTests: BaseXCTextCase {
     
     func testParametersSetup() {
-        let parameters = Example.GetRoute().request.request?.URL?.parameters() ?? [String: String]()
+        let parameters = Example.GetRoute().URLRequest.URL?.parameters() ?? [String: String]()
         XCTAssertTrue(parameters[RouteValues.parameterName] == RouteValues.parameterValue)
     }
     
@@ -80,6 +80,10 @@ private enum Example: RouteType, URLRequestParametersSetup, URLRequestSetup {
         urlRequest.setValue(RouteValues.headerValue, forHTTPHeaderField: RouteValues.headerName)
     }
 }
+
+//var method: Alamofire.Method { get }
+///// URL path
+//var path: String { get }
 
 private enum ModifiedEncodingExample: RouteType {
     

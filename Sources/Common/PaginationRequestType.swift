@@ -103,7 +103,7 @@ extension BasePaginationRequestType {
 //MARK: URLRequestConvertible conformance
     
     public var URLRequest: NSMutableURLRequest {
-        var mutableURLRequest = NSMutableURLRequest(URL: route.baseURL.URLByAppendingPathComponent(route.path))
+        var mutableURLRequest = NSMutableURLRequest(URL: route.baseURL.URLByAppendingPathComponent(route.path)!)
         mutableURLRequest.HTTPMethod = route.method.rawValue
         var params = (self.route as? URLRequestParametersSetup)?.urlRequestParametersSetup(mutableURLRequest, parameters: parameters) ?? parameters
         params = (self as? URLRequestParametersSetup)?.urlRequestParametersSetup(mutableURLRequest, parameters: params) ?? params

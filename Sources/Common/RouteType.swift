@@ -60,11 +60,11 @@ public protocol URLRequestParametersSetup {
     func urlRequestParametersSetup(urlRequest: NSMutableURLRequest, parameters: [String: AnyObject]?) -> [String: AnyObject]?
 }
 
-extension RouteType {
+public extension RouteType {
     
     /// The URL request.
     public var URLRequest: NSMutableURLRequest {
-        var mutableURLRequest = NSMutableURLRequest(URL: baseURL.URLByAppendingPathComponent(path))
+        var mutableURLRequest = NSMutableURLRequest(URL: baseURL.URLByAppendingPathComponent(path)!)
         mutableURLRequest.HTTPMethod = method.rawValue
         let params = (self as? URLRequestParametersSetup)?.urlRequestParametersSetup(mutableURLRequest, parameters: parameters) ?? parameters
         mutableURLRequest = encoding.encode(mutableURLRequest, parameters: params).0
@@ -84,4 +84,5 @@ extension RouteType {
     public var parameters: [String: AnyObject]? {
         return nil
     }
+
 }
