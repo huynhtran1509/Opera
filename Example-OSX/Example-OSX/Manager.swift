@@ -26,7 +26,7 @@ import Foundation
 import Alamofire
 import Opera
 
-class Manager: Opera.Manager {
+class Manager: RxManager {
     
     // Add a Github personal access token to have more requests per hour
     static let githubAuthorizationToken: String? = nil

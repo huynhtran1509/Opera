@@ -44,8 +44,8 @@ class ViewController: NSViewController {
     }
     
     private func setDelegates() {
-        tableView.setDelegate(self)
-        tableView.setDataSource(self)
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.target = self
         tableView.doubleAction = #selector(ViewController.tableViewDoubleClick(_:))
     }

@@ -1,5 +1,6 @@
 github "Alamofire/Alamofire" "3.5.0"
 github "thoughtbot/Argo" "v3.1.0"
+github "thoughtbot/Curry" "v2.3.2"
 github "Anviking/Decodable" "09e6e7a3d2bd96538d6cb12fd854386539be7e71"
 github "Quick/Nimble" "v4.1.0"
 github "Hearst-DD/ObjectMapper" "1.5.0"
