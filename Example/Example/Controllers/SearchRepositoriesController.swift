@@ -50,6 +50,24 @@ class SearchRepositoriesController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        /// TEST
+        GithubAPI.Repository.GetCommits(owner: "xmartlabs", repo: "eureka")
+            .rx
+            .object()
+            .do(
+                onNext: { (commits: [Commit]) in
+                    print("")
+                },
+                onError: { error in
+                    print(error)
+                }
+            )
+            .subscribe()
+            .addDisposableTo(disposeBag)
+
+
+        ///
+
         tableView.backgroundView = emptyStateLabel
         tableView.keyboardDismissMode = .onDrag
         tableView.addSubview(self.refreshControl)

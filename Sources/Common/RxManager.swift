@@ -34,26 +34,6 @@ extension Reactive where Base: RxManager {
     }
 
     /**
-     Returns a `Single` of [T] for the current request. Notice that T conforms to OperaDecodable. If something goes wrong an `OperaSwift.Error` error is propagated through the result sequence.
-
-     - parameter route: the route indicates the networking call that will be performed by including all the needed information like parameters, URL and HTTP method.
-     - parameter collectionKeyPath: keyPath to look up json array to serialize. Ignore parameter or pass nil when json array is the json root item.
-
-     - returns: An instance of `Single<[T]>`
-     */
-    func collection<T: OperaDecodable>(_ route: RouteType, collectionKeyPath: String? = nil) -> Single<[T]> {
-        return base.rx.response(route).flatMap { operaResult -> Single<[T]> in
-            let serialized: DataResponse<[T]> = operaResult.serializeCollection(collectionKeyPath)
-            switch serialized.result {
-            case .failure(let error):
-                return Single.error(error)
-            case .success(let anyObject):
-                return Single.just(anyObject)
-            }
-        }
-    }
-
-    /**
      Returns an `Single` of AnyObject for the current request. If something goes wrong an `OperaSwift.Error` error is propagated through the result sequence.
 
      - parameter route: the route indicates the networking call that will be performed by including all the needed information like parameters, URL and HTTP method.

@@ -47,19 +47,19 @@ extension Reactive where Base: RouteType {
         return (base.manager as! RxManager).rx.object(base, keyPath: keyPath)
     }
 
-    /**
-     Returns a `Single` of [T] for the current request. Notice that T conforms to OperaDecodable. If something goes wrong a Opera.Error error is propagated through the result sequence.
-
-     - parameter collectionKeyPath: keyPath to look up json array to serialize. Ignore parameter or pass nil when json array is the json root item.
-
-     - returns: An instance of `Single<[T]>`
-     */
-    public func collection<T: OperaDecodable>(_ collectionKeyPath: String? = nil) -> Single<[T]> {
-        if base.manager.useMockedData && base.mockedData != nil {
-            return (base.manager as! RxManager).rx.sampleCollection(base, collectionKeyPath: collectionKeyPath)
-        }
-        return (base.manager as! RxManager).rx.collection(base, collectionKeyPath: collectionKeyPath)
-    }
+//    /**
+//     Returns a `Single` of [T] for the current request. Notice that T conforms to OperaDecodable. If something goes wrong a Opera.Error error is propagated through the result sequence.
+//
+//     - parameter collectionKeyPath: keyPath to look up json array to serialize. Ignore parameter or pass nil when json array is the json root item.
+//
+//     - returns: An instance of `Single<[T]>`
+//     */
+//    public func collection<T: OperaDecodable>(_ collectionKeyPath: String? = nil) -> Single<[T]> {
+//        if base.manager.useMockedData && base.mockedData != nil {
+//            return (base.manager as! RxManager).rx.sampleCollection(base, collectionKeyPath: collectionKeyPath)
+//        }
+//        return (base.manager as! RxManager).rx.collection(base, collectionKeyPath: collectionKeyPath)
+//    }
 
     /**
      Returns a `Single` of Any for the current request. If something goes wrong a Opera.Error error is propagated through the result sequence.

@@ -52,5 +52,79 @@ import Foundation
  *      }
  */
 public protocol OperaDecodable {
+
     static func decode(_ json: Any) throws -> Self
+
+}
+
+extension Dictionary where Key: OperaDecodable, Value: OperaDecodable {
+
+    public static func decode(_ json: Any) throws -> Dictionary {
+        return try Dictionary.decoder(key: Key.decode, value: Value.decode)(json)
+    }
+
+}
+
+extension Array where Element: OperaDecodable {
+
+    public static func decode(_ json: Any, ignoreInvalidObjects: Bool = false) throws -> [Element] {
+        if ignoreInvalidObjects {
+            return try [Element?].decoder { try? Element.decode($0) }(json).flatMap {$0}
+        } else {
+            return try Array.decoder(Element.decode)(json)
+        }
+    }
+
+}
+
+extension Array {
+
+    public static func decoder(_ elementDecoder: @escaping (Any) throws -> Element) -> (Any) throws -> [Element] {
+        return { json in
+            return try NSArray.decode(json).map { try elementDecoder($0) }
+        }
+    }
+
+}
+
+extension Dictionary {
+
+    public static func decoder(key keyDecoder: @escaping (Any) throws -> Key, value valueDecoder: @escaping (Any) throws -> Value) -> (Any) throws -> Dictionary {
+        return { json in
+            var dict = Dictionary()
+            for (key, value) in try NSDictionary.decode(json) {
+                try dict[keyDecoder(key)] = valueDecoder(value)
+            }
+            return dict
+        }
+    }
+
+}
+
+public func cast<T>(_ object: Any) throws -> T {
+
+    guard let result = object as? T else {
+//        let metadata = DecodingError.Metadata(object: object)
+        throw NSError.init()//DecodingError.typeMismatch(expected: T.self, actual: type(of: object), metadata)
+    }
+    return result
+
+}
+
+extension NSDictionary: OperaDecodable {
+
+    public static func decode(_ json: Any) throws -> Self {
+        return try cast(json)
+    }
+
+}
+
+extension NSArray {
+
+    public static var decoder: (Any) throws -> NSArray = { try cast($0) }
+
+    public static func decode(_ json: Any) throws -> NSArray {
+        return try decoder(json)
+    }
+
 }
